@@ -1,0 +1,8 @@
+pulumi>=3.0.0,<4.0.0
+pulumi-gcp>=7.0.0,<8.0.0
+langchain
+langchain-openai
+python-dotenv
+beautifulsoup4
+youtube-transcript-api
+

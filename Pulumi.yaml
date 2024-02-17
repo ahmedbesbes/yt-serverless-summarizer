@@ -1,0 +1,12 @@
+name: yt-summarizer
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+backend:
+  url: gs://pulumi-gcp-state/main
+description: A minimal Google Cloud Python Pulumi program
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""
