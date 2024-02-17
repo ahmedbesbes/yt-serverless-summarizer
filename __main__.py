@@ -1,6 +1,6 @@
 import email
 import os
-from pulumi import asset, export, info
+from pulumi import asset, export
 import pulumi_gcp as gcp
 from dotenv import load_dotenv
 

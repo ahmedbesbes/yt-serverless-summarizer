@@ -49,25 +49,31 @@ def get_youtube_video_transcript(url):
     return transcript
 
 
-def get_prompt(title, transcript):
+def get_prompt(title, transcript, additional_instructions):
     template = """
     You're an assistant that summarizes Youtube videos based on their title and their transcript.
 
     Hint: Use the title to correct potential typos in the transcript.
 
+    ADDITIONAL INSTRUCTIONS: {additional_instructions}
+
     TITLE: {title}
 
     TRANSCRIPT: {transcript}
     """
-    prompt = template.format(title=title, transcript=transcript)
+    prompt = template.format(
+        title=title,
+        transcript=transcript,
+        additional_instructions=additional_instructions,
+    )
     return prompt
 
 
-def summarize_youtube_video(url):
+def summarize_youtube_video(url, additional_instructions):
     transcript = get_youtube_video_transcript(url)
     title = get_youtube_video_title(url)
     llm = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-    prompt = get_prompt(title, transcript)
+    prompt = get_prompt(title, transcript, additional_instructions)
     summary = llm.predict(prompt)
     data = {
         "url": url,
@@ -80,6 +86,10 @@ def summarize_youtube_video(url):
 
 @functions_framework.http
 def main(request: flask.Request):
-    url = request.form.get("url")
-    data = summarize_youtube_video(url)
-    return flask.jsonify(data)
+    if request.method == "POST":
+        url = request.form.get("url")
+        additional_instructions = request.form.get("additional_instructions")
+        data = summarize_youtube_video(url, additional_instructions)
+        return flask.jsonify(data)
+    else:
+        return "Method Not Allowed", 40()
