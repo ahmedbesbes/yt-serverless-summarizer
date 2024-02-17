@@ -1,6 +1,6 @@
 A Cloud function that summarizes Youtube videos with OpenAI
 
-### Demo
+### Demo:
 
 Given this URL: https://www.youtube.com/watch?v=zLJv37NKSx8
 
